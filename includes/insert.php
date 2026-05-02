@@ -1,32 +1,20 @@
 <?php
+include 'db.php';
 
-require_once __DIR__ . '/db.php';
+if(isset($_POST['savebtn'])){
+    $surname = $_POST['surname'];
+    $name = $_POST['name'];
+    $middlename = $_POST['middlename'];
+    $address = $_POST['address'];
+    $contact = $_POST['contact'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['name'] ?? '';
-    $surname = $_POST['surname'] ?? '';
-    $middlename = $_POST['middlename'] ?? '';
-    $address = $_POST['address'] ?? '';
-    $contact = $_POST['contact'] ?? '';
+    $sql = "INSERT INTO students (surname, name, middlename, address, contact)
+            VALUES ('$surname', '$name', '$middlename', '$address', '$contact')";
 
-    try {
-        $sql = "INSERT INTO students (name, surname, middlename, address, contact_number) 
-                VALUES (:name, :surname, :middlename, :address, :contact)";
-        
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            ':name'       => $name,
-            ':surname'    => $surname,
-            ':middlename' => $middlename,
-            ':address'    => $address,
-            ':contact'    => $contact
-        ]);
-
+    if($conn->query($sql)){
         header("Location: ../public/index.php?status=success");
-        exit();
-        
-    } catch (PDOException $e) {
-        echo "Database Error: " . $e->getMessage();
+    } else {
+        echo "Error: " . $conn->error;
     }
 }
 ?>

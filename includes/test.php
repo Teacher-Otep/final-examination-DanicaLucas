@@ -1,4 +1,9 @@
 <?php
-echo'<p>Hello world</p>';
+include 'db.php';
 
+if($conn){
+    echo "Database connected successfully!";
+} else {
+    echo "Connection failed!";
+}
 ?>
