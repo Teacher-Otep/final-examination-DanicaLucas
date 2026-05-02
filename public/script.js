@@ -1,38 +1,23 @@
-//fucntion to show selected section
+// SHOW SECTION
 function showSection(sectionID){
-    //initially, select all sections
-    // use querySelectorAll for all sections with class content and homecontent
-    const sections = document.querySelectorAll('.content');
-    const homesection = document.querySelectorAll('.homecontent');
-
-    //hide the resulting content sections using foreach
-    sections.forEach(section => {
-        section.style.display='none';
+    document.querySelectorAll('.content, .homecontent').forEach(sec=>{
+        sec.style.display='none';
     });
-
-
-    //select the section that would
-    //be displayed when clicked
-    const activeSection = document.getElementById(sectionID);
-    if(activeSection){
-        activeSection.style.display='block';
-    }
+    document.getElementById(sectionID).style.display='block';
 }
 
-//for the insertion success
-window.onload = function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('status') === 'success') {
-        const toast = document.getElementById('success-toast');
-        toast.classList.remove('toast-hidden');
-        
-        // Hide it automatically after 3 seconds
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => toast.classList.add('toast-hidden'), 500);
-        }, 3000);
+// LOGO CLICK → HIDE ALL
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("logo").addEventListener("click", () => {
+        document.querySelectorAll('.content, .homecontent').forEach(sec=>{
+            sec.style.display='none';
+        });
+    });
+});
 
-        // Clean the URL
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
+// CLEAR FIELDS
+function clearFields(){
+    document.querySelectorAll("input").forEach(input=>{
+        input.value="";
+    });
 }
